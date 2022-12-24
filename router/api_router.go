@@ -9,6 +9,7 @@ import (
 func LoadApiRouter(r *gin.Engine) {
 	r.POST("/register", contraller.RegisterHandler) //用户注册
 	r.POST("/login", contraller.LoginHandler)       //用户登录
+	r.DELETE("/logout", contraller.LogoutHandler)   //登出
 	//创建分组路由lib
 	v1 := r.Group("/lib/v1")
 	v1.Use(middleware.AuthMiddleware())            //权限检验

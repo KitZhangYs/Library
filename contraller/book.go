@@ -10,6 +10,7 @@ import (
 
 // CreateBook 新增书籍
 func CreateBook(c *gin.Context) {
+	id := c.MustGet("UserId").(string)
 	//新建Book模型并从Body中获取Book信息
 	p := new(model.Book)
 	err := c.BindJSON(p)

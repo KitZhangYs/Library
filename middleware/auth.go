@@ -24,7 +24,7 @@ func AuthMiddleware() func(c *gin.Context) {
 			c.Abort()
 			return
 		}
-		//设置UserId，继续进行下一步操作
+		//设置UserId(不知道干什么的能不动就不动)，继续进行下一步操作
 		c.Set("UserId", u.Id)
 		c.Next()
 	}
