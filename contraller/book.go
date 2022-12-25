@@ -10,7 +10,7 @@ import (
 
 // CreateBook 新增书籍
 func CreateBook(c *gin.Context) {
-	id := c.MustGet("UserId").(string)
+	//id := c.MustGet("UserId").(string)
 	//新建Book模型并从Body中获取Book信息
 	p := new(model.Book)
 	err := c.BindJSON(p)
@@ -29,7 +29,11 @@ func CreateBook(c *gin.Context) {
 // GetBookList 获取书籍清单
 func GetBookList(c *gin.Context) {
 	var books []model.Book
-	mysql.DB.Find(&books)
+	err := mysql.DB.Find(&books)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error})
+		return
+	}
 	c.JSON(200, gin.H{"books": books})
 }
 
@@ -37,7 +41,11 @@ func GetBookList(c *gin.Context) {
 func GetBookDetail(c *gin.Context) {
 	id := c.Param("id")
 	book := new(model.Book)
-	mysql.DB.Where("id =?", id).First(book)
+	err := mysql.DB.Where("id =?", id).First(book)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error})
+		return
+	}
 	c.JSON(200, gin.H{"book": book})
 }
 
